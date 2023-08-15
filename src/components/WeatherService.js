@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,12 +11,15 @@ import Container from '@mui/material/Container';
 import axios from 'axios';
 
 const WeatherService = () => {
+  const [weather, setWeather] = useState([]);
+  const [city, setCity] = useState('London');
   axios
     .get(
-      'http://api.weatherapi.com/v1/current.json?key=f6e22bcaa225462ea27125904231508&q=London'
+      `http://api.weatherapi.com/v1/current.json?key=f6e22bcaa225462ea27125904231508&q=${city}`
     )
     .then((res) => {
-      console.log(res.data);
+      setWeather([res.data]);
+      console.log(weather);
     })
     .catch((err) => {
       console.log(err);
@@ -28,6 +31,7 @@ const WeatherService = () => {
         label='City'
         type='search'
         variant='filled'
+        onChange={(e) => setCity(e.target.value)}
       />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -40,6 +44,21 @@ const WeatherService = () => {
               <TableCell align='right'>Humidity</TableCell>
             </TableRow>
           </TableHead>
+          <TableBody>
+            {weather.map((data) => (
+              <TableRow key={data.location.name}>
+                <TableCell>{data.location.name}</TableCell>
+                <TableCell align='right'>
+                  {data.current.condition.text}
+                </TableCell>
+                <TableCell align='right'>{data.current.temp_c} °C</TableCell>
+                <TableCell align='right'>
+                  {data.current.wind_kph} km/h
+                </TableCell>
+                <TableCell align='right'>{data.current.humidity}%</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
     </Container>
