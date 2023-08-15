@@ -8,8 +8,19 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
+import axios from 'axios';
 
 const WeatherService = () => {
+  axios
+    .get(
+      'http://api.weatherapi.com/v1/current.json?key=f6e22bcaa225462ea27125904231508&q=London'
+    )
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   return (
     <Container>
       <TextField
