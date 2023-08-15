@@ -17,7 +17,7 @@ const WeatherService = () => {
     setCity(e.target.value);
     axios
       .get(
-        `http://api.weatherapi.com/v1/current.json?key=f6e22bcaa225462ea27125904231508&q=${city}`
+        `http://api.weatherapi.com/v1/current.json?key=${process.env.API_KEY}&q=${city}`
       )
       .then((res) => {
         setWeather([res.data]);
