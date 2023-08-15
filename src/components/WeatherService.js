@@ -13,17 +13,21 @@ import axios from 'axios';
 const WeatherService = () => {
   const [weather, setWeather] = useState([]);
   const [city, setCity] = useState('London');
-  axios
-    .get(
-      `http://api.weatherapi.com/v1/current.json?key=f6e22bcaa225462ea27125904231508&q=${city}`
-    )
-    .then((res) => {
-      setWeather([res.data]);
-      console.log(weather);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  const handleSearch = (e) => {
+    setCity(e.target.value);
+    axios
+      .get(
+        `http://api.weatherapi.com/v1/current.json?key=f6e22bcaa225462ea27125904231508&q=${city}`
+      )
+      .then((res) => {
+        setWeather([res.data]);
+        console.log(weather);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <Container>
       <TextField
@@ -31,7 +35,7 @@ const WeatherService = () => {
         label='City'
         type='search'
         variant='filled'
-        onChange={(e) => setCity(e.target.value)}
+        onChange={handleSearch}
       />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
