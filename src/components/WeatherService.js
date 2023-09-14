@@ -16,9 +16,7 @@ const WeatherService = () => {
   const handleSearch = (e) => {
     setCity(e.target.value);
     axios
-      .get(
-        `http://api.weatherapi.com/v1/current.json?key=${process.env.API_KEY}&q=${city}`
-      )
+      .get(`http://localhost:3005&q=${city}`)
       .then((res) => {
         setWeather([res.data]);
         console.log(weather);
